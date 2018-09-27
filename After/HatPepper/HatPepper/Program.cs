@@ -4,23 +4,34 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using GoogleApi;
+using GoogleApi.Entities.Common.Enums;
+using GoogleApi.Entities.Places.Search.Common.Enums;
+using GoogleApi.Entities.Places.Search.Find.Request;
+using GoogleApi.Entities.Places.Search.NearBy.Request;
 using Newtonsoft.Json;
 
 namespace HatPepper
 {
     class Program
     {
-        private const string Uri = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=35.681167,139.767052&radius=1500&type=restaurant&language=ja&key={0}";
+        private const string Uri = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={0},{1}&radius=1500&type=restaurant&language=ja&key={2}";
         static async Task Main(string[] args)
         {
-            using (var httpClient = new HttpClient())
+            var location = await new GeoCoordinator().GetCurrent();
+
+            var request = new PlacesNearBySearchRequest
             {
-                var json = await httpClient.GetStringAsync(string.Format(Uri, Secrets.PlaceApiKey));
-                var root = JsonConvert.DeserializeObject<Rootobject>(json);
-                foreach (var result in root.results)
-                {
-                    Console.WriteLine($"{result.name}\t{result.rating}\t{result.vicinity}");
-                }
+                Key = Secrets.PlaceApiKey,
+                Location = new GoogleApi.Entities.Common.Location(location.Latitude, location.Longitude),
+                Radius = 1500,
+                Language = Language.Japanese,
+                Type = SearchPlaceType.Restaurant
+            };
+            var response = await GooglePlaces.NearBySearch.QueryAsync(request);
+            foreach (var nearByResult in response.Results)
+            {
+                Console.WriteLine($"{nearByResult.Name} - {nearByResult.Rating}");
             }
             Console.ReadKey();
         }
@@ -55,14 +66,7 @@ namespace HatPepper
 
     public class Geometry
     {
-        public Location location { get; set; }
         public Viewport viewport { get; set; }
-    }
-
-    public class Location
-    {
-        public float lat { get; set; }
-        public float lng { get; set; }
     }
 
     public class Viewport
