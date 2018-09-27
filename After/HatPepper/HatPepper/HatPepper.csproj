@@ -55,10 +55,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GeoCoordinator.cs" />
+    <Compile Include="GooglePlaceRepository.cs" />
     <Compile Include="IGeoCoordinator.cs" />
+    <Compile Include="IRestaurantRepository.cs" />
+    <Compile Include="ISearchNearbyRestaurants.cs" />
     <Compile Include="Location.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Restaurant.cs" />
+    <Compile Include="SearchNearbyRestaurants.cs" />
     <Compile Include="Secrets.cs" />
   </ItemGroup>
   <ItemGroup>
