@@ -1,4 +1,5 @@
-﻿using System.Device.Location;
+﻿using System;
+using System.Device.Location;
 using System.Threading;
 
 namespace HatPepper
@@ -11,7 +12,9 @@ namespace HatPepper
         /// <summary>
         /// 現在地を取得する
         /// </summary>
-        public Location GetCurrent()
+        /// <param name="timeout"></param>
+        /// <returns>タイムアウト時間を経過しても取得できない場合はnullを返す。</returns>
+        public Location GetCurrent(TimeSpan timeout)
         {
             // GeoCoordinateWatcherを利用して位置情報を取得する  
             // GeoCoordinateWatcherではStart直後は位置情報が取得できないため
@@ -36,9 +39,10 @@ namespace HatPepper
                 Monitor.Enter(this);
                 try
                 {
-                    // GeoCoordinateWatcherを起動し、PositionChangedイベントが発生するまで待機する
+                    // GeoCoordinateWatcherを起動し、PositionChangedイベントが発生するか
+                    // タイムアウトまで待機する
                     watcher.Start();
-                    Monitor.Wait(this);
+                    Monitor.Wait(this, timeout);
                 }
                 finally
                 {

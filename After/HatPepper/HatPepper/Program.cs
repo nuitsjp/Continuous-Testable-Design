@@ -7,11 +7,12 @@ namespace HatPepper
     {
         static async Task Main(string[] args)
         {
-            var restaurants = await new SearchNearbyRestaurants().SearchAsync();
-            foreach (var restaurant in restaurants)
-            {
-                Console.WriteLine($"{restaurant.Name} - {restaurant.Rating}");
-            }
+            var nearbyRestauranList =
+                new NearbyRestauranList(
+                    new SearchNearbyRestaurants(
+                        new GeoCoordinator(),
+                        new GooglePlaceRepository(Secrets.PlaceApiKey)));
+            await nearbyRestauranList.Show();
 
             Console.ReadKey();
         }
