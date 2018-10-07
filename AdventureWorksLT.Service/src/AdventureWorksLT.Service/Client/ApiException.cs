@@ -9,6 +9,8 @@
  */
 
 using System;
+// ReSharper disable InheritdocConsiderUsage
+// ReSharper disable UnusedMember.Global
 
 namespace AdventureWorksLT.Service.Client
 {
@@ -27,7 +29,7 @@ namespace AdventureWorksLT.Service.Client
         /// Gets or sets the error content (body json object)
         /// </summary>
         /// <value>The error content (Http response body).</value>
-        public dynamic ErrorContent { get; private set; }
+        public dynamic ErrorContent { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ApiException"/> class.
@@ -41,7 +43,7 @@ namespace AdventureWorksLT.Service.Client
         /// <param name="message">Error message.</param>
         public ApiException(int errorCode, string message) : base(message)
         {
-            this.ErrorCode = errorCode;
+            ErrorCode = errorCode;
         }
 
         /// <summary>
@@ -52,8 +54,8 @@ namespace AdventureWorksLT.Service.Client
         /// <param name="errorContent">Error content.</param>
         public ApiException(int errorCode, string message, dynamic errorContent = null) : base(message)
         {
-            this.ErrorCode = errorCode;
-            this.ErrorContent = errorContent;
+            ErrorCode = errorCode;
+            ErrorContent = errorContent;
         }
     }
 

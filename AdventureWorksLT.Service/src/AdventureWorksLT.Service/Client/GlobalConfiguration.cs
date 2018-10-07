@@ -9,25 +9,18 @@
  */
 
 
-using System;
-using System.Reflection;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
-
 namespace AdventureWorksLT.Service.Client
 {
+    /// <inheritdoc />
     /// <summary>
-    /// <see cref="GlobalConfiguration"/> provides a compile-time extension point for globally configuring
+    /// <see cref="T:AdventureWorksLT.Service.Client.GlobalConfiguration" /> provides a compile-time extension point for globally configuring
     /// API Clients.
     /// </summary>
     /// <remarks>
     /// A customized implementation via partial class may reside in another file and may
     /// be excluded from automatic generation via a .swagger-codegen-ignore file.
     /// </remarks>
-    public partial class GlobalConfiguration : Configuration
+    public class GlobalConfiguration : Configuration
     {
 
     }

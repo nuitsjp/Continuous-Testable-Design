@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{86C8FAEA-1F34-4069-B9B1-4E4E98BC2B2F}</ProjectGuid>
+    <ProjectGuid>{6F64F256-28BB-459C-B8AF-C158DF34569C}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>HatPepper</RootNamespace>
-    <AssemblyName>HatPepper</AssemblyName>
+    <RootNamespace>ProductSalesList</RootNamespace>
+    <AssemblyName>ProductSalesList</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -22,7 +21,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -34,18 +32,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BouncyCastle.Crypto, Version=1.8.1.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
-      <HintPath>..\packages\BouncyCastle.1.8.1\lib\BouncyCastle.Crypto.dll</HintPath>
-    </Reference>
-    <Reference Include="GoogleApi, Version=3.6.12.0, Culture=neutral, PublicKeyToken=781851e053b06e74, processorArchitecture=MSIL">
-      <HintPath>..\packages\GoogleApi.3.6.12\lib\net45\GoogleApi.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="CsvHelper, Version=7.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
+      <HintPath>..\packages\CsvHelper.7.1.1\lib\net45\CsvHelper.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Device" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -54,29 +45,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GeoCoordinator.cs" />
-    <Compile Include="GooglePlaceRepository.cs" />
-    <Compile Include="IGeoCoordinator.cs" />
-    <Compile Include="IRestaurantRepository.cs" />
-    <Compile Include="ISearchNearbyRestaurants.cs" />
-    <Compile Include="Location.cs" />
-    <Compile Include="NearbyRestauranList.cs" />
+    <Compile Include="Controllers\Controller.cs" />
+    <Compile Include="Models\BusinessLogic.cs" />
+    <Compile Include="Models\IBusinessLogic.cs" />
+    <Compile Include="Models\IRepository.cs" />
+    <Compile Include="Models\ProductName.cs" />
+    <Compile Include="Models\ProductSales.cs" />
+    <Compile Include="Models\Repository.cs" />
+    <Compile Include="Models\Sales.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Restaurant.cs" />
-    <Compile Include="SearchNearbyRestaurants.cs" />
-    <Compile Include="SearchResult.cs" />
-    <Compile Include="SearchResultStatus.cs" />
-    <Compile Include="Secrets.cs" />
+    <Compile Include="Views\IView.cs" />
+    <Compile Include="Views\ProductSalesCsvRow.cs" />
+    <Compile Include="Views\View.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\AdventureWorksLT.Service\src\AdventureWorksLT.Service\AdventureWorksLT.Service.csproj">
+      <Project>{bd0b6de8-f92d-46a2-8674-86c3b62b9104}</Project>
+      <Name>AdventureWorksLT.Service</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PreBuildEvent>if not exist $(ProjectDir)\Secrets.cs copy $(SolutionDir)\..\..\SecretsBase.cs $(ProjectDir)\Secrets.cs &gt;nul
-</PreBuildEvent>
-  </PropertyGroup>
 </Project>

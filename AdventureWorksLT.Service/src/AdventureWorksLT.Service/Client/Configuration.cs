@@ -9,12 +9,11 @@
  */
 
 using System;
-using System.Reflection;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
+// ReSharper disable InheritdocConsiderUsage
+// ReSharper disable UnusedMember.Global
 
 namespace AdventureWorksLT.Service.Client
 {
@@ -29,6 +28,7 @@ namespace AdventureWorksLT.Service.Client
         /// Version of the package.
         /// </summary>
         /// <value>Version of the package.</value>
+        // ReSharper disable once UnusedMember.Global
         public const string Version = "1.0.0";
 
         /// <summary>
@@ -54,13 +54,13 @@ namespace AdventureWorksLT.Service.Client
             if (status >= 400)
             {
                 return new ApiException(status,
-                    string.Format("Error calling {0}: {1}", methodName, response.Content),
+                    $"Error calling {methodName}: {response.Content}",
                     response.Content);
             }
             if (status == 0)
             {
                 return new ApiException(status,
-                    string.Format("Error calling {0}: {1}", methodName, response.ErrorMessage), response.ErrorMessage);
+                    $"Error calling {methodName}: {response.ErrorMessage}", response.ErrorMessage);
             }
             return null;
         };
@@ -71,7 +71,7 @@ namespace AdventureWorksLT.Service.Client
         /// <value>Configuration.</value>
         public static Configuration Default
         {
-            get { return _globalConfiguration; }
+            get => _globalConfiguration;
             set
             {
                 lock (GlobalConfigSync)
@@ -89,13 +89,13 @@ namespace AdventureWorksLT.Service.Client
         /// Gets or sets the API key based on the authentication name.
         /// </summary>
         /// <value>The API key.</value>
-        private IDictionary<string, string> _apiKey = null;
+        private IDictionary<string, string> _apiKey;
 
         /// <summary>
         /// Gets or sets the prefix (e.g. Token) of the API key based on the authentication name.
         /// </summary>
         /// <value>The prefix of the API key.</value>
-        private IDictionary<string, string> _apiKeyPrefix = null;
+        private IDictionary<string, string> _apiKeyPrefix;
 
         private string _dateTimeFormat = ISO8601_DATETIME_FORMAT;
         private string _tempFolderPath = Path.GetTempPath();
@@ -134,13 +134,13 @@ namespace AdventureWorksLT.Service.Client
             string basePath = "http://localhost:9000") : this()
         {
             if (string.IsNullOrWhiteSpace(basePath))
-                throw new ArgumentException("The provided basePath is invalid.", "basePath");
+                throw new ArgumentException("The provided basePath is invalid.", nameof(basePath));
             if (defaultHeader == null)
-                throw new ArgumentNullException("defaultHeader");
+                throw new ArgumentNullException(nameof(defaultHeader));
             if (apiKey == null)
-                throw new ArgumentNullException("apiKey");
+                throw new ArgumentNullException(nameof(apiKey));
             if (apiKeyPrefix == null)
-                throw new ArgumentNullException("apiKeyPrefix");
+                throw new ArgumentNullException(nameof(apiKeyPrefix));
 
             BasePath = basePath;
 
@@ -210,25 +210,18 @@ namespace AdventureWorksLT.Service.Client
 
         #region Properties
 
-        private ApiClient _apiClient = null;
+        private ApiClient _apiClient;
         /// <summary>
         /// Gets an instance of an ApiClient for this configuration
         /// </summary>
-        public virtual ApiClient ApiClient
-        {
-            get
-            {
-                if (_apiClient == null) _apiClient = CreateApiClient();
-                return _apiClient;
-            }
-        }
+        public ApiClient ApiClient => _apiClient ?? (_apiClient = CreateApiClient());
 
-        private String _basePath = null;
+        private string _basePath;
         /// <summary>
         /// Gets or sets the base path for API access.
         /// </summary>
-        public virtual string BasePath {
-            get { return _basePath; }
+        public string BasePath {
+            get => _basePath;
             set {
                 _basePath = value;
                 // pass-through to ApiClient if it's set.
@@ -241,35 +234,35 @@ namespace AdventureWorksLT.Service.Client
         /// <summary>
         /// Gets or sets the default header.
         /// </summary>
-        public virtual IDictionary<string, string> DefaultHeader { get; set; }
+        public IDictionary<string, string> DefaultHeader { get; set; }
 
         /// <summary>
         /// Gets or sets the HTTP timeout (milliseconds) of ApiClient. Default to 100000 milliseconds.
         /// </summary>
-        public virtual int Timeout
+        public int Timeout
         {
             
-            get { return ApiClient.RestClient.Timeout; }
-            set { ApiClient.RestClient.Timeout = value; }
+            get => ApiClient.RestClient.Timeout;
+            set => ApiClient.RestClient.Timeout = value;
         }
 
         /// <summary>
         /// Gets or sets the HTTP user agent.
         /// </summary>
         /// <value>Http user agent.</value>
-        public virtual string UserAgent { get; set; }
+        public string UserAgent { get; set; }
 
         /// <summary>
         /// Gets or sets the username (HTTP basic authentication).
         /// </summary>
         /// <value>The username.</value>
-        public virtual string Username { get; set; }
+        public string Username { get; set; }
 
         /// <summary>
         /// Gets or sets the password (HTTP basic authentication).
         /// </summary>
         /// <value>The password.</value>
-        public virtual string Password { get; set; }
+        public string Password { get; set; }
 
         /// <summary>
         /// Gets the API key with prefix.
@@ -278,28 +271,25 @@ namespace AdventureWorksLT.Service.Client
         /// <returns>API key with prefix.</returns>
         public string GetApiKeyWithPrefix(string apiKeyIdentifier)
         {
-            var apiKeyValue = "";
-            ApiKey.TryGetValue (apiKeyIdentifier, out apiKeyValue);
-            var apiKeyPrefix = "";
-            if (ApiKeyPrefix.TryGetValue (apiKeyIdentifier, out apiKeyPrefix))
+            ApiKey.TryGetValue (apiKeyIdentifier, out var apiKeyValue);
+            if (ApiKeyPrefix.TryGetValue (apiKeyIdentifier, out var apiKeyPrefix))
                 return apiKeyPrefix + " " + apiKeyValue;
-            else
-                return apiKeyValue;
+            return apiKeyValue;
         }
 
         /// <summary>
         /// Gets or sets the access token for OAuth2 authentication.
         /// </summary>
         /// <value>The access token.</value>
-        public virtual string AccessToken { get; set; }
+        public string AccessToken { get; set; }
 
         /// <summary>
         /// Gets or sets the temporary folder path to store the files downloaded from the server.
         /// </summary>
         /// <value>Folder path.</value>
-        public virtual string TempFolderPath
+        public string TempFolderPath
         {
-            get { return _tempFolderPath; }
+            get => _tempFolderPath;
 
             set
             {
@@ -336,9 +326,9 @@ namespace AdventureWorksLT.Service.Client
         /// No validation is done to ensure that the string you're providing is valid
         /// </summary>
         /// <value>The DateTimeFormat string</value>
-        public virtual string DateTimeFormat
+        public string DateTimeFormat
         {
-            get { return _dateTimeFormat; }
+            get => _dateTimeFormat;
             set
             {
                 if (string.IsNullOrEmpty(value))
@@ -358,34 +348,20 @@ namespace AdventureWorksLT.Service.Client
         /// Gets or sets the prefix (e.g. Token) of the API key based on the authentication name.
         /// </summary>
         /// <value>The prefix of the API key.</value>
-        public virtual IDictionary<string, string> ApiKeyPrefix
+        public IDictionary<string, string> ApiKeyPrefix
         {
-            get { return _apiKeyPrefix; }
-            set
-            {
-                if (value == null)
-                {
-                    throw new InvalidOperationException("ApiKeyPrefix collection may not be null.");
-                }
-                _apiKeyPrefix = value;
-            }
+            get => _apiKeyPrefix;
+            set => _apiKeyPrefix = value ?? throw new InvalidOperationException("ApiKeyPrefix collection may not be null.");
         }
 
         /// <summary>
         /// Gets or sets the API key based on the authentication name.
         /// </summary>
         /// <value>The API key.</value>
-        public virtual IDictionary<string, string> ApiKey
+        public IDictionary<string, string> ApiKey
         {
-            get { return _apiKey; }
-            set
-            {
-                if (value == null)
-                {
-                    throw new InvalidOperationException("ApiKey collection may not be null.");
-                }
-                _apiKey = value;
-            }
+            get => _apiKey;
+            set => _apiKey = value ?? throw new InvalidOperationException("ApiKey collection may not be null.");
         }
 
         #endregion Properties
@@ -416,11 +392,11 @@ namespace AdventureWorksLT.Service.Client
         /// <summary>
         /// Returns a string with essential information for debugging.
         /// </summary>
-        public static String ToDebugReport()
+        public static string ToDebugReport()
         {
-            String report = "C# SDK (AdventureWorksLT.Service) Debug Report:\n";
-            report += "    OS: " + System.Environment.OSVersion + "\n";
-            report += "    .NET Framework Version: " + System.Environment.Version  + "\n";
+            var report = "C# SDK (AdventureWorksLT.Service) Debug Report:\n";
+            report += "    OS: " + Environment.OSVersion + "\n";
+            report += "    .NET Framework Version: " + Environment.Version  + "\n";
             report += "    Version of the API: v1\n";
             report += "    SDK Package Version: 1.0.0\n";
 

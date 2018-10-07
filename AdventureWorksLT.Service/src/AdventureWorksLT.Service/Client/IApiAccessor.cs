@@ -9,12 +9,7 @@
  */
 
 
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using RestSharp;
-
+// ReSharper disable UnusedMember.Global
 namespace AdventureWorksLT.Service.Client
 {
     /// <summary>
@@ -32,7 +27,7 @@ namespace AdventureWorksLT.Service.Client
         /// Gets the base path of the API client.
         /// </summary>
         /// <value>The base path</value>
-        String GetBasePath();
+        string GetBasePath();
         
         /// <summary>
         /// Provides a factory method hook for the creation of exceptions.

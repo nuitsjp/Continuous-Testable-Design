@@ -9,18 +9,15 @@
  */
 
 using System;
-using System.Linq;
-using System.IO;
 using System.Text;
-using System.Text.RegularExpressions;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
-using SwaggerDateConverter = AdventureWorksLT.Service.Client.SwaggerDateConverter;
+// ReSharper disable InheritdocConsiderUsage
+// ReSharper disable CompareOfFloatsByEqualityOperator
+// ReSharper disable NonReadonlyMemberInGetHashCode
+// ReSharper disable UnusedMember.Global
 
 namespace AdventureWorksLT.Service.Model
 {
@@ -28,54 +25,54 @@ namespace AdventureWorksLT.Service.Model
     /// Product
     /// </summary>
     [DataContract]
-    public partial class Product :  IEquatable<Product>, IValidatableObject
+    public class Product :  IEquatable<Product>, IValidatableObject
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Product" /> class.
         /// </summary>
-        /// <param name="ProductID">ProductID.</param>
-        /// <param name="Name">Name.</param>
-        /// <param name="ProductNumber">ProductNumber.</param>
-        /// <param name="Color">Color.</param>
-        /// <param name="StandardCost">StandardCost.</param>
-        /// <param name="ListPrice">ListPrice.</param>
-        /// <param name="Size">Size.</param>
-        /// <param name="Weight">Weight.</param>
-        /// <param name="ProductCategoryID">ProductCategoryID.</param>
-        /// <param name="ProductModelID">ProductModelID.</param>
-        /// <param name="SellStartDate">SellStartDate.</param>
-        /// <param name="SellEndDate">SellEndDate.</param>
-        /// <param name="DiscontinuedDate">DiscontinuedDate.</param>
-        /// <param name="ThumbNailPhoto">ThumbNailPhoto.</param>
-        /// <param name="ThumbnailPhotoFileName">ThumbnailPhotoFileName.</param>
-        /// <param name="Rowguid">Rowguid.</param>
-        /// <param name="ModifiedDate">ModifiedDate.</param>
-        public Product(int? ProductID = default(int?), string Name = default(string), string ProductNumber = default(string), string Color = default(string), double? StandardCost = default(double?), double? ListPrice = default(double?), string Size = default(string), double? Weight = default(double?), int? ProductCategoryID = default(int?), int? ProductModelID = default(int?), DateTime? SellStartDate = default(DateTime?), DateTime? SellEndDate = default(DateTime?), DateTime? DiscontinuedDate = default(DateTime?), byte[] ThumbNailPhoto = default(byte[]), string ThumbnailPhotoFileName = default(string), Guid? Rowguid = default(Guid?), DateTime? ModifiedDate = default(DateTime?))
+        /// <param name="productId">ProductID.</param>
+        /// <param name="name">Name.</param>
+        /// <param name="productNumber">ProductNumber.</param>
+        /// <param name="color">Color.</param>
+        /// <param name="standardCost">StandardCost.</param>
+        /// <param name="listPrice">ListPrice.</param>
+        /// <param name="size">Size.</param>
+        /// <param name="weight">Weight.</param>
+        /// <param name="productCategoryId">ProductCategoryID.</param>
+        /// <param name="productModelId">ProductModelID.</param>
+        /// <param name="sellStartDate">SellStartDate.</param>
+        /// <param name="sellEndDate">SellEndDate.</param>
+        /// <param name="discontinuedDate">DiscontinuedDate.</param>
+        /// <param name="thumbNailPhoto">ThumbNailPhoto.</param>
+        /// <param name="thumbnailPhotoFileName">ThumbnailPhotoFileName.</param>
+        /// <param name="rowguid">Rowguid.</param>
+        /// <param name="modifiedDate">ModifiedDate.</param>
+        public Product(int productId = default(int), string name = default(string), string productNumber = default(string), string color = default(string), double? standardCost = default(double?), double? listPrice = default(double?), string size = default(string), double? weight = default(double?), int? productCategoryId = default(int?), int? productModelId = default(int?), DateTime? sellStartDate = default(DateTime?), DateTime? sellEndDate = default(DateTime?), DateTime? discontinuedDate = default(DateTime?), byte[] thumbNailPhoto = default(byte[]), string thumbnailPhotoFileName = default(string), Guid? rowguid = default(Guid?), DateTime? modifiedDate = default(DateTime?))
         {
-            this.ProductID = ProductID;
-            this.Name = Name;
-            this.ProductNumber = ProductNumber;
-            this.Color = Color;
-            this.StandardCost = StandardCost;
-            this.ListPrice = ListPrice;
-            this.Size = Size;
-            this.Weight = Weight;
-            this.ProductCategoryID = ProductCategoryID;
-            this.ProductModelID = ProductModelID;
-            this.SellStartDate = SellStartDate;
-            this.SellEndDate = SellEndDate;
-            this.DiscontinuedDate = DiscontinuedDate;
-            this.ThumbNailPhoto = ThumbNailPhoto;
-            this.ThumbnailPhotoFileName = ThumbnailPhotoFileName;
-            this.Rowguid = Rowguid;
-            this.ModifiedDate = ModifiedDate;
+            ProductId = productId;
+            Name = name;
+            ProductNumber = productNumber;
+            Color = color;
+            StandardCost = standardCost;
+            ListPrice = listPrice;
+            Size = size;
+            Weight = weight;
+            ProductCategoryId = productCategoryId;
+            ProductModelId = productModelId;
+            SellStartDate = sellStartDate;
+            SellEndDate = sellEndDate;
+            DiscontinuedDate = discontinuedDate;
+            ThumbNailPhoto = thumbNailPhoto;
+            ThumbnailPhotoFileName = thumbnailPhotoFileName;
+            Rowguid = rowguid;
+            ModifiedDate = modifiedDate;
         }
         
         /// <summary>
         /// Gets or Sets ProductID
         /// </summary>
         [DataMember(Name="ProductID", EmitDefaultValue=false)]
-        public int? ProductID { get; set; }
+        public int ProductId { get; set; }
 
         /// <summary>
         /// Gets or Sets Name
@@ -123,13 +120,13 @@ namespace AdventureWorksLT.Service.Model
         /// Gets or Sets ProductCategoryID
         /// </summary>
         [DataMember(Name="ProductCategoryID", EmitDefaultValue=false)]
-        public int? ProductCategoryID { get; set; }
+        public int? ProductCategoryId { get; set; }
 
         /// <summary>
         /// Gets or Sets ProductModelID
         /// </summary>
         [DataMember(Name="ProductModelID", EmitDefaultValue=false)]
-        public int? ProductModelID { get; set; }
+        public int? ProductModelId { get; set; }
 
         /// <summary>
         /// Gets or Sets SellStartDate
@@ -181,7 +178,7 @@ namespace AdventureWorksLT.Service.Model
         {
             var sb = new StringBuilder();
             sb.Append("class Product {\n");
-            sb.Append("  ProductID: ").Append(ProductID).Append("\n");
+            sb.Append("  ProductID: ").Append(ProductId).Append("\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  ProductNumber: ").Append(ProductNumber).Append("\n");
             sb.Append("  Color: ").Append(Color).Append("\n");
@@ -189,8 +186,8 @@ namespace AdventureWorksLT.Service.Model
             sb.Append("  ListPrice: ").Append(ListPrice).Append("\n");
             sb.Append("  Size: ").Append(Size).Append("\n");
             sb.Append("  Weight: ").Append(Weight).Append("\n");
-            sb.Append("  ProductCategoryID: ").Append(ProductCategoryID).Append("\n");
-            sb.Append("  ProductModelID: ").Append(ProductModelID).Append("\n");
+            sb.Append("  ProductCategoryID: ").Append(ProductCategoryId).Append("\n");
+            sb.Append("  ProductModelID: ").Append(ProductModelId).Append("\n");
             sb.Append("  SellStartDate: ").Append(SellStartDate).Append("\n");
             sb.Append("  SellEndDate: ").Append(SellEndDate).Append("\n");
             sb.Append("  DiscontinuedDate: ").Append(DiscontinuedDate).Append("\n");
@@ -218,7 +215,7 @@ namespace AdventureWorksLT.Service.Model
         /// <returns>Boolean</returns>
         public override bool Equals(object input)
         {
-            return this.Equals(input as Product);
+            return Equals(input as Product);
         }
 
         /// <summary>
@@ -233,89 +230,88 @@ namespace AdventureWorksLT.Service.Model
 
             return 
                 (
-                    this.ProductID == input.ProductID ||
-                    (this.ProductID != null &&
-                    this.ProductID.Equals(input.ProductID))
+                    ProductId == input.ProductId ||
+                    ProductId.Equals(input.ProductId)
                 ) && 
                 (
-                    this.Name == input.Name ||
-                    (this.Name != null &&
-                    this.Name.Equals(input.Name))
+                    Name == input.Name ||
+                    Name != null &&
+                    Name.Equals(input.Name)
                 ) && 
                 (
-                    this.ProductNumber == input.ProductNumber ||
-                    (this.ProductNumber != null &&
-                    this.ProductNumber.Equals(input.ProductNumber))
+                    ProductNumber == input.ProductNumber ||
+                    ProductNumber != null &&
+                    ProductNumber.Equals(input.ProductNumber)
                 ) && 
                 (
-                    this.Color == input.Color ||
-                    (this.Color != null &&
-                    this.Color.Equals(input.Color))
+                    Color == input.Color ||
+                    Color != null &&
+                    Color.Equals(input.Color)
                 ) && 
                 (
-                    this.StandardCost == input.StandardCost ||
-                    (this.StandardCost != null &&
-                    this.StandardCost.Equals(input.StandardCost))
+                    StandardCost == input.StandardCost ||
+                    StandardCost != null &&
+                    StandardCost.Equals(input.StandardCost)
                 ) && 
                 (
-                    this.ListPrice == input.ListPrice ||
-                    (this.ListPrice != null &&
-                    this.ListPrice.Equals(input.ListPrice))
+                    ListPrice == input.ListPrice ||
+                    ListPrice != null &&
+                    ListPrice.Equals(input.ListPrice)
                 ) && 
                 (
-                    this.Size == input.Size ||
-                    (this.Size != null &&
-                    this.Size.Equals(input.Size))
+                    Size == input.Size ||
+                    Size != null &&
+                    Size.Equals(input.Size)
                 ) && 
                 (
-                    this.Weight == input.Weight ||
-                    (this.Weight != null &&
-                    this.Weight.Equals(input.Weight))
+                    Weight == input.Weight ||
+                    Weight != null &&
+                    Weight.Equals(input.Weight)
                 ) && 
                 (
-                    this.ProductCategoryID == input.ProductCategoryID ||
-                    (this.ProductCategoryID != null &&
-                    this.ProductCategoryID.Equals(input.ProductCategoryID))
+                    ProductCategoryId == input.ProductCategoryId ||
+                    ProductCategoryId != null &&
+                    ProductCategoryId.Equals(input.ProductCategoryId)
                 ) && 
                 (
-                    this.ProductModelID == input.ProductModelID ||
-                    (this.ProductModelID != null &&
-                    this.ProductModelID.Equals(input.ProductModelID))
+                    ProductModelId == input.ProductModelId ||
+                    ProductModelId != null &&
+                    ProductModelId.Equals(input.ProductModelId)
                 ) && 
                 (
-                    this.SellStartDate == input.SellStartDate ||
-                    (this.SellStartDate != null &&
-                    this.SellStartDate.Equals(input.SellStartDate))
+                    SellStartDate == input.SellStartDate ||
+                    SellStartDate != null &&
+                    SellStartDate.Equals(input.SellStartDate)
                 ) && 
                 (
-                    this.SellEndDate == input.SellEndDate ||
-                    (this.SellEndDate != null &&
-                    this.SellEndDate.Equals(input.SellEndDate))
+                    SellEndDate == input.SellEndDate ||
+                    SellEndDate != null &&
+                    SellEndDate.Equals(input.SellEndDate)
                 ) && 
                 (
-                    this.DiscontinuedDate == input.DiscontinuedDate ||
-                    (this.DiscontinuedDate != null &&
-                    this.DiscontinuedDate.Equals(input.DiscontinuedDate))
+                    DiscontinuedDate == input.DiscontinuedDate ||
+                    DiscontinuedDate != null &&
+                    DiscontinuedDate.Equals(input.DiscontinuedDate)
                 ) && 
                 (
-                    this.ThumbNailPhoto == input.ThumbNailPhoto ||
-                    (this.ThumbNailPhoto != null &&
-                    this.ThumbNailPhoto.Equals(input.ThumbNailPhoto))
+                    ThumbNailPhoto == input.ThumbNailPhoto ||
+                    ThumbNailPhoto != null &&
+                    ThumbNailPhoto.Equals(input.ThumbNailPhoto)
                 ) && 
                 (
-                    this.ThumbnailPhotoFileName == input.ThumbnailPhotoFileName ||
-                    (this.ThumbnailPhotoFileName != null &&
-                    this.ThumbnailPhotoFileName.Equals(input.ThumbnailPhotoFileName))
+                    ThumbnailPhotoFileName == input.ThumbnailPhotoFileName ||
+                    ThumbnailPhotoFileName != null &&
+                    ThumbnailPhotoFileName.Equals(input.ThumbnailPhotoFileName)
                 ) && 
                 (
-                    this.Rowguid == input.Rowguid ||
-                    (this.Rowguid != null &&
-                    this.Rowguid.Equals(input.Rowguid))
+                    Rowguid == input.Rowguid ||
+                    Rowguid != null &&
+                    Rowguid.Equals(input.Rowguid)
                 ) && 
                 (
-                    this.ModifiedDate == input.ModifiedDate ||
-                    (this.ModifiedDate != null &&
-                    this.ModifiedDate.Equals(input.ModifiedDate))
+                    ModifiedDate == input.ModifiedDate ||
+                    ModifiedDate != null &&
+                    ModifiedDate.Equals(input.ModifiedDate)
                 );
         }
 
@@ -327,41 +323,40 @@ namespace AdventureWorksLT.Service.Model
         {
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
-                if (this.ProductID != null)
-                    hashCode = hashCode * 59 + this.ProductID.GetHashCode();
-                if (this.Name != null)
-                    hashCode = hashCode * 59 + this.Name.GetHashCode();
-                if (this.ProductNumber != null)
-                    hashCode = hashCode * 59 + this.ProductNumber.GetHashCode();
-                if (this.Color != null)
-                    hashCode = hashCode * 59 + this.Color.GetHashCode();
-                if (this.StandardCost != null)
-                    hashCode = hashCode * 59 + this.StandardCost.GetHashCode();
-                if (this.ListPrice != null)
-                    hashCode = hashCode * 59 + this.ListPrice.GetHashCode();
-                if (this.Size != null)
-                    hashCode = hashCode * 59 + this.Size.GetHashCode();
-                if (this.Weight != null)
-                    hashCode = hashCode * 59 + this.Weight.GetHashCode();
-                if (this.ProductCategoryID != null)
-                    hashCode = hashCode * 59 + this.ProductCategoryID.GetHashCode();
-                if (this.ProductModelID != null)
-                    hashCode = hashCode * 59 + this.ProductModelID.GetHashCode();
-                if (this.SellStartDate != null)
-                    hashCode = hashCode * 59 + this.SellStartDate.GetHashCode();
-                if (this.SellEndDate != null)
-                    hashCode = hashCode * 59 + this.SellEndDate.GetHashCode();
-                if (this.DiscontinuedDate != null)
-                    hashCode = hashCode * 59 + this.DiscontinuedDate.GetHashCode();
-                if (this.ThumbNailPhoto != null)
-                    hashCode = hashCode * 59 + this.ThumbNailPhoto.GetHashCode();
-                if (this.ThumbnailPhotoFileName != null)
-                    hashCode = hashCode * 59 + this.ThumbnailPhotoFileName.GetHashCode();
-                if (this.Rowguid != null)
-                    hashCode = hashCode * 59 + this.Rowguid.GetHashCode();
-                if (this.ModifiedDate != null)
-                    hashCode = hashCode * 59 + this.ModifiedDate.GetHashCode();
+                var hashCode = 41;
+                hashCode = hashCode * 59 + ProductId.GetHashCode();
+                if (Name != null)
+                    hashCode = hashCode * 59 + Name.GetHashCode();
+                if (ProductNumber != null)
+                    hashCode = hashCode * 59 + ProductNumber.GetHashCode();
+                if (Color != null)
+                    hashCode = hashCode * 59 + Color.GetHashCode();
+                if (StandardCost != null)
+                    hashCode = hashCode * 59 + StandardCost.GetHashCode();
+                if (ListPrice != null)
+                    hashCode = hashCode * 59 + ListPrice.GetHashCode();
+                if (Size != null)
+                    hashCode = hashCode * 59 + Size.GetHashCode();
+                if (Weight != null)
+                    hashCode = hashCode * 59 + Weight.GetHashCode();
+                if (ProductCategoryId != null)
+                    hashCode = hashCode * 59 + ProductCategoryId.GetHashCode();
+                if (ProductModelId != null)
+                    hashCode = hashCode * 59 + ProductModelId.GetHashCode();
+                if (SellStartDate != null)
+                    hashCode = hashCode * 59 + SellStartDate.GetHashCode();
+                if (SellEndDate != null)
+                    hashCode = hashCode * 59 + SellEndDate.GetHashCode();
+                if (DiscontinuedDate != null)
+                    hashCode = hashCode * 59 + DiscontinuedDate.GetHashCode();
+                if (ThumbNailPhoto != null)
+                    hashCode = hashCode * 59 + ThumbNailPhoto.GetHashCode();
+                if (ThumbnailPhotoFileName != null)
+                    hashCode = hashCode * 59 + ThumbnailPhotoFileName.GetHashCode();
+                if (Rowguid != null)
+                    hashCode = hashCode * 59 + Rowguid.GetHashCode();
+                if (ModifiedDate != null)
+                    hashCode = hashCode * 59 + ModifiedDate.GetHashCode();
                 return hashCode;
             }
         }
@@ -371,7 +366,7 @@ namespace AdventureWorksLT.Service.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
             yield break;
         }

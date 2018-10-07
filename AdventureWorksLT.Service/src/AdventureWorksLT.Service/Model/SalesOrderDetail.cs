@@ -9,18 +9,15 @@
  */
 
 using System;
-using System.Linq;
-using System.IO;
 using System.Text;
-using System.Text.RegularExpressions;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
-using SwaggerDateConverter = AdventureWorksLT.Service.Client.SwaggerDateConverter;
+// ReSharper disable InheritdocConsiderUsage
+// ReSharper disable CompareOfFloatsByEqualityOperator
+// ReSharper disable NonReadonlyMemberInGetHashCode
+// ReSharper disable UnusedMember.Global
 
 namespace AdventureWorksLT.Service.Model
 {
@@ -28,44 +25,44 @@ namespace AdventureWorksLT.Service.Model
     /// SalesOrderDetail
     /// </summary>
     [DataContract]
-    public partial class SalesOrderDetail :  IEquatable<SalesOrderDetail>, IValidatableObject
+    public class SalesOrderDetail :  IEquatable<SalesOrderDetail>, IValidatableObject
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SalesOrderDetail" /> class.
         /// </summary>
-        /// <param name="SalesOrderID">SalesOrderID.</param>
-        /// <param name="SalesOrderDetailID">SalesOrderDetailID.</param>
-        /// <param name="OrderQty">OrderQty.</param>
-        /// <param name="ProductID">ProductID.</param>
-        /// <param name="UnitPrice">UnitPrice.</param>
-        /// <param name="UnitPriceDiscount">UnitPriceDiscount.</param>
-        /// <param name="LineTotal">LineTotal.</param>
-        /// <param name="Rowguid">Rowguid.</param>
-        /// <param name="ModifiedDate">ModifiedDate.</param>
-        public SalesOrderDetail(int? SalesOrderID = default(int?), int? SalesOrderDetailID = default(int?), int? OrderQty = default(int?), int? ProductID = default(int?), double? UnitPrice = default(double?), double? UnitPriceDiscount = default(double?), double? LineTotal = default(double?), Guid? Rowguid = default(Guid?), DateTime? ModifiedDate = default(DateTime?))
+        /// <param name="salesOrderId">SalesOrderID.</param>
+        /// <param name="salesOrderDetailId">SalesOrderDetailID.</param>
+        /// <param name="orderQty">OrderQty.</param>
+        /// <param name="productId">ProductID.</param>
+        /// <param name="unitPrice">UnitPrice.</param>
+        /// <param name="unitPriceDiscount">UnitPriceDiscount.</param>
+        /// <param name="lineTotal">LineTotal.</param>
+        /// <param name="rowguid">Rowguid.</param>
+        /// <param name="modifiedDate">ModifiedDate.</param>
+        public SalesOrderDetail(int? salesOrderId = default(int?), int? salesOrderDetailId = default(int?), int? orderQty = default(int?), int productId = default(int), double? unitPrice = default(double?), double? unitPriceDiscount = default(double?), double lineTotal = default(double), Guid? rowguid = default(Guid?), DateTime? modifiedDate = default(DateTime?))
         {
-            this.SalesOrderID = SalesOrderID;
-            this.SalesOrderDetailID = SalesOrderDetailID;
-            this.OrderQty = OrderQty;
-            this.ProductID = ProductID;
-            this.UnitPrice = UnitPrice;
-            this.UnitPriceDiscount = UnitPriceDiscount;
-            this.LineTotal = LineTotal;
-            this.Rowguid = Rowguid;
-            this.ModifiedDate = ModifiedDate;
+            SalesOrderId = salesOrderId;
+            SalesOrderDetailId = salesOrderDetailId;
+            OrderQty = orderQty;
+            ProductId = productId;
+            UnitPrice = unitPrice;
+            UnitPriceDiscount = unitPriceDiscount;
+            LineTotal = lineTotal;
+            Rowguid = rowguid;
+            ModifiedDate = modifiedDate;
         }
         
         /// <summary>
         /// Gets or Sets SalesOrderID
         /// </summary>
         [DataMember(Name="SalesOrderID", EmitDefaultValue=false)]
-        public int? SalesOrderID { get; set; }
+        public int? SalesOrderId { get; set; }
 
         /// <summary>
         /// Gets or Sets SalesOrderDetailID
         /// </summary>
         [DataMember(Name="SalesOrderDetailID", EmitDefaultValue=false)]
-        public int? SalesOrderDetailID { get; set; }
+        public int? SalesOrderDetailId { get; set; }
 
         /// <summary>
         /// Gets or Sets OrderQty
@@ -77,7 +74,7 @@ namespace AdventureWorksLT.Service.Model
         /// Gets or Sets ProductID
         /// </summary>
         [DataMember(Name="ProductID", EmitDefaultValue=false)]
-        public int? ProductID { get; set; }
+        public int ProductId { get; set; }
 
         /// <summary>
         /// Gets or Sets UnitPrice
@@ -95,7 +92,7 @@ namespace AdventureWorksLT.Service.Model
         /// Gets or Sets LineTotal
         /// </summary>
         [DataMember(Name="LineTotal", EmitDefaultValue=false)]
-        public double? LineTotal { get; set; }
+        public double LineTotal { get; set; }
 
         /// <summary>
         /// Gets or Sets Rowguid
@@ -117,10 +114,10 @@ namespace AdventureWorksLT.Service.Model
         {
             var sb = new StringBuilder();
             sb.Append("class SalesOrderDetail {\n");
-            sb.Append("  SalesOrderID: ").Append(SalesOrderID).Append("\n");
-            sb.Append("  SalesOrderDetailID: ").Append(SalesOrderDetailID).Append("\n");
+            sb.Append("  SalesOrderID: ").Append(SalesOrderId).Append("\n");
+            sb.Append("  SalesOrderDetailID: ").Append(SalesOrderDetailId).Append("\n");
             sb.Append("  OrderQty: ").Append(OrderQty).Append("\n");
-            sb.Append("  ProductID: ").Append(ProductID).Append("\n");
+            sb.Append("  ProductID: ").Append(ProductId).Append("\n");
             sb.Append("  UnitPrice: ").Append(UnitPrice).Append("\n");
             sb.Append("  UnitPriceDiscount: ").Append(UnitPriceDiscount).Append("\n");
             sb.Append("  LineTotal: ").Append(LineTotal).Append("\n");
@@ -146,7 +143,7 @@ namespace AdventureWorksLT.Service.Model
         /// <returns>Boolean</returns>
         public override bool Equals(object input)
         {
-            return this.Equals(input as SalesOrderDetail);
+            return Equals(input as SalesOrderDetail);
         }
 
         /// <summary>
@@ -161,49 +158,47 @@ namespace AdventureWorksLT.Service.Model
 
             return 
                 (
-                    this.SalesOrderID == input.SalesOrderID ||
-                    (this.SalesOrderID != null &&
-                    this.SalesOrderID.Equals(input.SalesOrderID))
+                    SalesOrderId == input.SalesOrderId ||
+                    SalesOrderId != null &&
+                    SalesOrderId.Equals(input.SalesOrderId)
                 ) && 
                 (
-                    this.SalesOrderDetailID == input.SalesOrderDetailID ||
-                    (this.SalesOrderDetailID != null &&
-                    this.SalesOrderDetailID.Equals(input.SalesOrderDetailID))
+                    SalesOrderDetailId == input.SalesOrderDetailId ||
+                    SalesOrderDetailId != null &&
+                    SalesOrderDetailId.Equals(input.SalesOrderDetailId)
                 ) && 
                 (
-                    this.OrderQty == input.OrderQty ||
-                    (this.OrderQty != null &&
-                    this.OrderQty.Equals(input.OrderQty))
+                    OrderQty == input.OrderQty ||
+                    OrderQty != null &&
+                    OrderQty.Equals(input.OrderQty)
                 ) && 
                 (
-                    this.ProductID == input.ProductID ||
-                    (this.ProductID != null &&
-                    this.ProductID.Equals(input.ProductID))
+                    ProductId == input.ProductId ||
+                    ProductId.Equals(input.ProductId)
                 ) && 
                 (
-                    this.UnitPrice == input.UnitPrice ||
-                    (this.UnitPrice != null &&
-                    this.UnitPrice.Equals(input.UnitPrice))
+                    UnitPrice == input.UnitPrice ||
+                    UnitPrice != null &&
+                    UnitPrice.Equals(input.UnitPrice)
                 ) && 
                 (
-                    this.UnitPriceDiscount == input.UnitPriceDiscount ||
-                    (this.UnitPriceDiscount != null &&
-                    this.UnitPriceDiscount.Equals(input.UnitPriceDiscount))
+                    UnitPriceDiscount == input.UnitPriceDiscount ||
+                    UnitPriceDiscount != null &&
+                    UnitPriceDiscount.Equals(input.UnitPriceDiscount)
                 ) && 
                 (
-                    this.LineTotal == input.LineTotal ||
-                    (this.LineTotal != null &&
-                    this.LineTotal.Equals(input.LineTotal))
+                    LineTotal == input.LineTotal ||
+                    LineTotal.Equals(input.LineTotal)
                 ) && 
                 (
-                    this.Rowguid == input.Rowguid ||
-                    (this.Rowguid != null &&
-                    this.Rowguid.Equals(input.Rowguid))
+                    Rowguid == input.Rowguid ||
+                    Rowguid != null &&
+                    Rowguid.Equals(input.Rowguid)
                 ) && 
                 (
-                    this.ModifiedDate == input.ModifiedDate ||
-                    (this.ModifiedDate != null &&
-                    this.ModifiedDate.Equals(input.ModifiedDate))
+                    ModifiedDate == input.ModifiedDate ||
+                    ModifiedDate != null &&
+                    ModifiedDate.Equals(input.ModifiedDate)
                 );
         }
 
@@ -215,25 +210,23 @@ namespace AdventureWorksLT.Service.Model
         {
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
-                if (this.SalesOrderID != null)
-                    hashCode = hashCode * 59 + this.SalesOrderID.GetHashCode();
-                if (this.SalesOrderDetailID != null)
-                    hashCode = hashCode * 59 + this.SalesOrderDetailID.GetHashCode();
-                if (this.OrderQty != null)
-                    hashCode = hashCode * 59 + this.OrderQty.GetHashCode();
-                if (this.ProductID != null)
-                    hashCode = hashCode * 59 + this.ProductID.GetHashCode();
-                if (this.UnitPrice != null)
-                    hashCode = hashCode * 59 + this.UnitPrice.GetHashCode();
-                if (this.UnitPriceDiscount != null)
-                    hashCode = hashCode * 59 + this.UnitPriceDiscount.GetHashCode();
-                if (this.LineTotal != null)
-                    hashCode = hashCode * 59 + this.LineTotal.GetHashCode();
-                if (this.Rowguid != null)
-                    hashCode = hashCode * 59 + this.Rowguid.GetHashCode();
-                if (this.ModifiedDate != null)
-                    hashCode = hashCode * 59 + this.ModifiedDate.GetHashCode();
+                var hashCode = 41;
+                if (SalesOrderId != null)
+                    hashCode = hashCode * 59 + SalesOrderId.GetHashCode();
+                if (SalesOrderDetailId != null)
+                    hashCode = hashCode * 59 + SalesOrderDetailId.GetHashCode();
+                if (OrderQty != null)
+                    hashCode = hashCode * 59 + OrderQty.GetHashCode();
+                hashCode = hashCode * 59 + ProductId.GetHashCode();
+                if (UnitPrice != null)
+                    hashCode = hashCode * 59 + UnitPrice.GetHashCode();
+                if (UnitPriceDiscount != null)
+                    hashCode = hashCode * 59 + UnitPriceDiscount.GetHashCode();
+                hashCode = hashCode * 59 + LineTotal.GetHashCode();
+                if (Rowguid != null)
+                    hashCode = hashCode * 59 + Rowguid.GetHashCode();
+                if (ModifiedDate != null)
+                    hashCode = hashCode * 59 + ModifiedDate.GetHashCode();
                 return hashCode;
             }
         }
@@ -243,7 +236,7 @@ namespace AdventureWorksLT.Service.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
             yield break;
         }

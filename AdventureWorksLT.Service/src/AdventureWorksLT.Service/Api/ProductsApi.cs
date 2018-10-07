@@ -15,9 +15,11 @@ using System.Linq;
 using RestSharp;
 using AdventureWorksLT.Service.Client;
 using AdventureWorksLT.Service.Model;
+// ReSharper disable UnusedMember.Global
 
 namespace AdventureWorksLT.Service.Api
 {
+    /// <inheritdoc />
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
@@ -67,22 +69,23 @@ namespace AdventureWorksLT.Service.Api
         #endregion Asynchronous Operations
     }
 
+    /// <inheritdoc />
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
-    public partial class ProductsApi : IProductsApi
+    public class ProductsApi : IProductsApi
     {
-        private AdventureWorksLT.Service.Client.ExceptionFactory _exceptionFactory = (name, response) => null;
+        private ExceptionFactory _exceptionFactory = (name, response) => null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProductsApi"/> class.
         /// </summary>
         /// <returns></returns>
-        public ProductsApi(String basePath)
+        public ProductsApi(string basePath)
         {
-            this.Configuration = new Configuration { BasePath = basePath };
+            Configuration = new Configuration { BasePath = basePath };
 
-            ExceptionFactory = AdventureWorksLT.Service.Client.Configuration.DefaultExceptionFactory;
+            ExceptionFactory = Configuration.DefaultExceptionFactory;
         }
 
         /// <summary>
@@ -93,21 +96,18 @@ namespace AdventureWorksLT.Service.Api
         /// <returns></returns>
         public ProductsApi(Configuration configuration = null)
         {
-            if (configuration == null) // use the default one in Configuration
-                this.Configuration = Configuration.Default;
-            else
-                this.Configuration = configuration;
-
-            ExceptionFactory = AdventureWorksLT.Service.Client.Configuration.DefaultExceptionFactory;
+            Configuration = configuration ?? Configuration.Default;
+            ExceptionFactory = Configuration.DefaultExceptionFactory;
         }
 
+        /// <inheritdoc />
         /// <summary>
         /// Gets the base path of the API client.
         /// </summary>
         /// <value>The base path</value>
-        public String GetBasePath()
+        public string GetBasePath()
         {
-            return this.Configuration.ApiClient.RestClient.BaseUrl.ToString();
+            return Configuration.ApiClient.RestClient.BaseUrl.ToString();
         }
 
         /// <summary>
@@ -115,21 +115,23 @@ namespace AdventureWorksLT.Service.Api
         /// </summary>
         /// <value>The base path</value>
         [Obsolete("SetBasePath is deprecated, please do 'Configuration.ApiClient = new ApiClient(\"http://new-path\")' instead.")]
-        public void SetBasePath(String basePath)
+        public void SetBasePath(string basePath)
         {
             // do nothing
         }
 
+        /// <inheritdoc />
         /// <summary>
         /// Gets or sets the configuration object
         /// </summary>
         /// <value>An instance of the Configuration</value>
         public Configuration Configuration {get; set;}
 
+        /// <inheritdoc />
         /// <summary>
         /// Provides a factory method hook for the creation of exceptions.
         /// </summary>
-        public AdventureWorksLT.Service.Client.ExceptionFactory ExceptionFactory
+        public ExceptionFactory ExceptionFactory
         {
             get
             {
@@ -139,7 +141,7 @@ namespace AdventureWorksLT.Service.Api
                 }
                 return _exceptionFactory;
             }
-            set { _exceptionFactory = value; }
+            set => _exceptionFactory = value;
         }
 
         /// <summary>
@@ -147,9 +149,9 @@ namespace AdventureWorksLT.Service.Api
         /// </summary>
         /// <returns>Dictionary of HTTP header</returns>
         [Obsolete("DefaultHeader is deprecated, please use Configuration.DefaultHeader instead.")]
-        public IDictionary<String, String> DefaultHeader()
+        public IDictionary<string, string> DefaultHeader()
         {
-            return new ReadOnlyDictionary<string, string>(this.Configuration.DefaultHeader);
+            return new ReadOnlyDictionary<string, string>(Configuration.DefaultHeader);
         }
 
         /// <summary>
@@ -161,130 +163,122 @@ namespace AdventureWorksLT.Service.Api
         [Obsolete("AddDefaultHeader is deprecated, please use Configuration.AddDefaultHeader instead.")]
         public void AddDefaultHeader(string key, string value)
         {
-            this.Configuration.AddDefaultHeader(key, value);
+            Configuration.AddDefaultHeader(key, value);
         }
 
+        /// <inheritdoc />
         /// <summary>
-        ///  
         /// </summary>
-        /// <exception cref="AdventureWorksLT.Service.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="T:AdventureWorksLT.Service.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>List&lt;Product&gt;</returns>
         public List<Product> ProductsGet ()
         {
-             ApiResponse<List<Product>> localVarResponse = ProductsGetWithHttpInfo();
+             var localVarResponse = ProductsGetWithHttpInfo();
              return localVarResponse.Data;
         }
 
+        /// <inheritdoc />
         /// <summary>
-        ///  
         /// </summary>
-        /// <exception cref="AdventureWorksLT.Service.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="T:AdventureWorksLT.Service.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>ApiResponse of List&lt;Product&gt;</returns>
         public ApiResponse< List<Product> > ProductsGetWithHttpInfo ()
         {
 
-            var localVarPath = "/api/Products";
-            var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
-            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
-            var localVarFormParams = new Dictionary<String, String>();
-            var localVarFileParams = new Dictionary<String, FileParameter>();
-            Object localVarPostBody = null;
+            const string localVarPath = "/api/Products";
+            var localVarPathParams = new Dictionary<string, string>();
+            var localVarQueryParams = new List<KeyValuePair<string, string>>();
+            var localVarHeaderParams = new Dictionary<string, string>(Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<string, string>();
+            var localVarFileParams = new Dictionary<string, FileParameter>();
 
             // to determine the Content-Type header
-            String[] localVarHttpContentTypes = new String[] {
+            var localVarHttpContentTypes = new string[] {
             };
-            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+            var localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
 
             // to determine the Accept header
-            String[] localVarHttpHeaderAccepts = new String[] {
+            var localVarHttpHeaderAccepts = new[] {
                 "application/json",
                 "text/json",
                 "application/xml",
                 "text/xml"
             };
-            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            var localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
 
 
             // make the HTTP request
-            IRestResponse localVarResponse = (IRestResponse) Configuration.ApiClient.CallApi(localVarPath,
-                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+            var localVarResponse = (IRestResponse) Configuration.ApiClient.CallApi(localVarPath,
+                Method.GET, localVarQueryParams, null, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
-            int localVarStatusCode = (int) localVarResponse.StatusCode;
+            var localVarStatusCode = (int) localVarResponse.StatusCode;
 
-            if (ExceptionFactory != null)
-            {
-                Exception exception = ExceptionFactory("ProductsGet", localVarResponse);
-                if (exception != null) throw exception;
-            }
+            var exception = ExceptionFactory?.Invoke("ProductsGet", localVarResponse);
+            if (exception != null) throw exception;
 
             return new ApiResponse<List<Product>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Product>) Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Product>)));
         }
 
+        /// <inheritdoc />
         /// <summary>
-        ///  
         /// </summary>
-        /// <exception cref="AdventureWorksLT.Service.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="T:AdventureWorksLT.Service.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of List&lt;Product&gt;</returns>
         public async System.Threading.Tasks.Task<List<Product>> ProductsGetAsync ()
         {
-             ApiResponse<List<Product>> localVarResponse = await ProductsGetAsyncWithHttpInfo();
+             var localVarResponse = await ProductsGetAsyncWithHttpInfo();
              return localVarResponse.Data;
 
         }
 
+        /// <inheritdoc />
         /// <summary>
-        ///  
         /// </summary>
-        /// <exception cref="AdventureWorksLT.Service.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="T:AdventureWorksLT.Service.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of ApiResponse (List&lt;Product&gt;)</returns>
         public async System.Threading.Tasks.Task<ApiResponse<List<Product>>> ProductsGetAsyncWithHttpInfo ()
         {
 
-            var localVarPath = "/api/Products";
-            var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
-            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
-            var localVarFormParams = new Dictionary<String, String>();
-            var localVarFileParams = new Dictionary<String, FileParameter>();
-            Object localVarPostBody = null;
+            const string localVarPath = "/api/Products";
+            var localVarPathParams = new Dictionary<string, string>();
+            var localVarQueryParams = new List<KeyValuePair<string, string>>();
+            var localVarHeaderParams = new Dictionary<string, string>(Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<string, string>();
+            var localVarFileParams = new Dictionary<string, FileParameter>();
 
             // to determine the Content-Type header
-            String[] localVarHttpContentTypes = new String[] {
+            var localVarHttpContentTypes = new string[] {
             };
-            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+            var localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
 
             // to determine the Accept header
-            String[] localVarHttpHeaderAccepts = new String[] {
+            var localVarHttpHeaderAccepts = new[] {
                 "application/json",
                 "text/json",
                 "application/xml",
                 "text/xml"
             };
-            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            var localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
 
 
             // make the HTTP request
-            IRestResponse localVarResponse = (IRestResponse) await Configuration.ApiClient.CallApiAsync(localVarPath,
-                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+            var localVarResponse = (IRestResponse) await Configuration.ApiClient.CallApiAsync(localVarPath,
+                Method.GET, localVarQueryParams, null, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
-            int localVarStatusCode = (int) localVarResponse.StatusCode;
+            var localVarStatusCode = (int) localVarResponse.StatusCode;
 
-            if (ExceptionFactory != null)
-            {
-                Exception exception = ExceptionFactory("ProductsGet", localVarResponse);
-                if (exception != null) throw exception;
-            }
+            var exception = ExceptionFactory?.Invoke("ProductsGet", localVarResponse);
+            if (exception != null) throw exception;
 
             return new ApiResponse<List<Product>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),

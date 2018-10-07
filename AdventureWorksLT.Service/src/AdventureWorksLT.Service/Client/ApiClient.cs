@@ -11,24 +11,22 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Text.RegularExpressions;
 using System.IO;
-using System.Web;
 using System.Linq;
-using System.Net;
 using System.Text;
 using Newtonsoft.Json;
 using RestSharp;
+// ReSharper disable UnusedMember.Global
 
 namespace AdventureWorksLT.Service.Client
 {
     /// <summary>
     /// API client is mainly responsible for making the HTTP call to the API backend.
     /// </summary>
-    public partial class ApiClient
+    public class ApiClient
     {
-        private JsonSerializerSettings serializerSettings = new JsonSerializerSettings
+        private readonly JsonSerializerSettings _serializerSettings = new JsonSerializerSettings
         {
             ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor
         };
@@ -37,14 +35,14 @@ namespace AdventureWorksLT.Service.Client
         /// Allows for extending request processing for <see cref="ApiClient"/> generated code.
         /// </summary>
         /// <param name="request">The RestSharp request object</param>
-        partial void InterceptRequest(IRestRequest request);
+        public void InterceptRequest(IRestRequest request) { }
 
         /// <summary>
         /// Allows for extending response processing for <see cref="ApiClient"/> generated code.
         /// </summary>
         /// <param name="request">The RestSharp request object</param>
         /// <param name="response">The RestSharp response object</param>
-        partial void InterceptResponse(IRestRequest request, IRestResponse response);
+        public void InterceptResponse(IRestRequest request, IRestResponse response) { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ApiClient" /> class
@@ -73,9 +71,9 @@ namespace AdventureWorksLT.Service.Client
         /// with default configuration.
         /// </summary>
         /// <param name="basePath">The base path.</param>
-        public ApiClient(String basePath = "http://localhost:9000")
+        public ApiClient(string basePath = "http://localhost:9000")
         {
-           if (String.IsNullOrEmpty(basePath))
+           if (string.IsNullOrEmpty(basePath))
                 throw new ArgumentException("basePath cannot be empty");
 
             RestClient = new RestClient(basePath);
@@ -107,11 +105,11 @@ namespace AdventureWorksLT.Service.Client
         public RestClient RestClient { get; set; }
 
         // Creates and sets up a RestRequest prior to a call.
-        private RestRequest PrepareRequest(
-            String path, RestSharp.Method method, List<KeyValuePair<String, String>> queryParams, Object postBody,
-            Dictionary<String, String> headerParams, Dictionary<String, String> formParams,
-            Dictionary<String, FileParameter> fileParams, Dictionary<String, String> pathParams,
-            String contentType)
+        private static RestRequest PrepareRequest(
+            string path, Method method, IEnumerable<KeyValuePair<string, string>> queryParams, object postBody,
+            Dictionary<string, string> headerParams, Dictionary<string, string> formParams,
+            Dictionary<string, FileParameter> fileParams, Dictionary<string, string> pathParams,
+            string contentType)
         {
             var request = new RestRequest(path, method);
 
@@ -158,11 +156,11 @@ namespace AdventureWorksLT.Service.Client
         /// <param name="pathParams">Path parameters.</param>
         /// <param name="contentType">Content Type of the request</param>
         /// <returns>Object</returns>
-        public Object CallApi(
-            String path, RestSharp.Method method, List<KeyValuePair<String, String>> queryParams, Object postBody,
-            Dictionary<String, String> headerParams, Dictionary<String, String> formParams,
-            Dictionary<String, FileParameter> fileParams, Dictionary<String, String> pathParams,
-            String contentType)
+        public object CallApi(
+            string path, Method method, List<KeyValuePair<string, string>> queryParams, object postBody,
+            Dictionary<string, string> headerParams, Dictionary<string, string> formParams,
+            Dictionary<string, FileParameter> fileParams, Dictionary<string, string> pathParams,
+            string contentType)
         {
             var request = PrepareRequest(
                 path, method, queryParams, postBody, headerParams, formParams, fileParams,
@@ -178,7 +176,7 @@ namespace AdventureWorksLT.Service.Client
             var response = RestClient.Execute(request);
             InterceptResponse(request, response);
 
-            return (Object) response;
+            return response;
         }
         /// <summary>
         /// Makes the asynchronous HTTP request.
@@ -193,11 +191,11 @@ namespace AdventureWorksLT.Service.Client
         /// <param name="pathParams">Path parameters.</param>
         /// <param name="contentType">Content type.</param>
         /// <returns>The Task instance.</returns>
-        public async System.Threading.Tasks.Task<Object> CallApiAsync(
-            String path, RestSharp.Method method, List<KeyValuePair<String, String>> queryParams, Object postBody,
-            Dictionary<String, String> headerParams, Dictionary<String, String> formParams,
-            Dictionary<String, FileParameter> fileParams, Dictionary<String, String> pathParams,
-            String contentType)
+        public async System.Threading.Tasks.Task<object> CallApiAsync(
+            string path, Method method, List<KeyValuePair<string, string>> queryParams, object postBody,
+            Dictionary<string, string> headerParams, Dictionary<string, string> formParams,
+            Dictionary<string, FileParameter> fileParams, Dictionary<string, string> pathParams,
+            string contentType)
         {
             var request = PrepareRequest(
                 path, method, queryParams, postBody, headerParams, formParams, fileParams,
@@ -205,7 +203,7 @@ namespace AdventureWorksLT.Service.Client
             InterceptRequest(request);
             var response = await RestClient.ExecuteTaskAsync(request);
             InterceptResponse(request, response);
-            return (Object)response;
+            return response;
         }
 
         /// <summary>
@@ -226,10 +224,10 @@ namespace AdventureWorksLT.Service.Client
         /// <returns>FileParameter.</returns>
         public FileParameter ParameterToFile(string name, Stream stream)
         {
-            if (stream is FileStream)
-                return FileParameter.Create(name, ReadAsBytes(stream), Path.GetFileName(((FileStream)stream).Name));
-            else
-                return FileParameter.Create(name, ReadAsBytes(stream), "no_file_name_provided");
+            if (stream is FileStream fileStream)
+                return FileParameter.Create(name, ReadAsBytes(fileStream), Path.GetFileName(fileStream.Name));
+
+            return FileParameter.Create(name, ReadAsBytes(stream), "no_file_name_provided");
         }
 
         /// <summary>
@@ -241,31 +239,32 @@ namespace AdventureWorksLT.Service.Client
         /// <returns>Formatted string.</returns>
         public string ParameterToString(object obj)
         {
-            if (obj is DateTime)
-                // Return a formatted date string - Can be customized with Configuration.DateTimeFormat
-                // Defaults to an ISO 8601, using the known as a Round-trip date/time pattern ("o")
-                // https://msdn.microsoft.com/en-us/library/az4se3k1(v=vs.110).aspx#Anchor_8
-                // For example: 2009-06-15T13:45:30.0000000
-                return ((DateTime)obj).ToString (Configuration.DateTimeFormat);
-            else if (obj is DateTimeOffset)
-                // Return a formatted date string - Can be customized with Configuration.DateTimeFormat
-                // Defaults to an ISO 8601, using the known as a Round-trip date/time pattern ("o")
-                // https://msdn.microsoft.com/en-us/library/az4se3k1(v=vs.110).aspx#Anchor_8
-                // For example: 2009-06-15T13:45:30.0000000
-                return ((DateTimeOffset)obj).ToString (Configuration.DateTimeFormat);
-            else if (obj is IList)
+            switch (obj)
             {
-                var flattenedString = new StringBuilder();
-                foreach (var param in (IList)obj)
-                {
-                    if (flattenedString.Length > 0)
-                        flattenedString.Append(",");
-                    flattenedString.Append(param);
-                }
-                return flattenedString.ToString();
+                // Return a formatted date string - Can be customized with Configuration.DateTimeFormat
+                // Defaults to an ISO 8601, using the known as a Round-trip date/time pattern ("o")
+                // https://msdn.microsoft.com/en-us/library/az4se3k1(v=vs.110).aspx#Anchor_8
+                // For example: 2009-06-15T13:45:30.0000000
+                case DateTime time:
+                    return time.ToString (Configuration.DateTimeFormat);
+                // Return a formatted date string - Can be customized with Configuration.DateTimeFormat
+                // Defaults to an ISO 8601, using the known as a Round-trip date/time pattern ("o")
+                // https://msdn.microsoft.com/en-us/library/az4se3k1(v=vs.110).aspx#Anchor_8
+                // For example: 2009-06-15T13:45:30.0000000
+                case DateTimeOffset offset:
+                    return offset.ToString (Configuration.DateTimeFormat);
+                case IList list:
+                    var flattenedString = new StringBuilder();
+                    foreach (var param in list)
+                    {
+                        if (flattenedString.Length > 0)
+                            flattenedString.Append(",");
+                        flattenedString.Append(param);
+                    }
+                    return flattenedString.ToString();
+                default:
+                    return Convert.ToString (obj);
             }
-            else
-                return Convert.ToString (obj);
         }
 
         /// <summary>
@@ -276,7 +275,7 @@ namespace AdventureWorksLT.Service.Client
         /// <returns>Object representation of the JSON string.</returns>
         public object Deserialize(IRestResponse response, Type type)
         {
-            IList<Parameter> headers = response.Headers;
+            var headers = response.Headers;
             if (type == typeof(byte[])) // return byte array
             {
                 return response.RawBytes;
@@ -287,19 +286,18 @@ namespace AdventureWorksLT.Service.Client
             {
                 if (headers != null)
                 {
-                    var filePath = String.IsNullOrEmpty(Configuration.TempFolderPath)
+                    var filePath = string.IsNullOrEmpty(Configuration.TempFolderPath)
                         ? Path.GetTempPath()
                         : Configuration.TempFolderPath;
                     var regex = new Regex(@"Content-Disposition=.*filename=['""]?([^'""\s]+)['""]?$");
                     foreach (var header in headers)
                     {
                         var match = regex.Match(header.ToString());
-                        if (match.Success)
-                        {
-                            string fileName = filePath + SanitizeFilename(match.Groups[1].Value.Replace("\"", "").Replace("'", ""));
-                            File.WriteAllBytes(fileName, response.RawBytes);
-                            return new FileStream(fileName, FileMode.Open);
-                        }
+                        if (!match.Success) continue;
+
+                        var fileName = filePath + SanitizeFilename(match.Groups[1].Value.Replace("\"", "").Replace("'", ""));
+                        File.WriteAllBytes(fileName, response.RawBytes);
+                        return new FileStream(fileName, FileMode.Open);
                     }
                 }
                 var stream = new MemoryStream(response.RawBytes);
@@ -311,7 +309,7 @@ namespace AdventureWorksLT.Service.Client
                 return DateTime.Parse(response.Content,  null, System.Globalization.DateTimeStyles.RoundtripKind);
             }
 
-            if (type == typeof(String) || type.Name.StartsWith("System.Nullable")) // return primitive type
+            if (type == typeof(string) || type.Name.StartsWith("System.Nullable")) // return primitive type
             {
                 return ConvertType(response.Content, type);
             }
@@ -319,7 +317,7 @@ namespace AdventureWorksLT.Service.Client
             // at this point, it must be a model (json)
             try
             {
-                return JsonConvert.DeserializeObject(response.Content, type, serializerSettings);
+                return JsonConvert.DeserializeObject(response.Content, type, _serializerSettings);
             }
             catch (Exception e)
             {
@@ -332,7 +330,7 @@ namespace AdventureWorksLT.Service.Client
         /// </summary>
         /// <param name="obj">Object.</param>
         /// <returns>JSON string.</returns>
-        public String Serialize(object obj)
+        public string Serialize(object obj)
         {
             try
             {
@@ -354,7 +352,7 @@ namespace AdventureWorksLT.Service.Client
         /// </summary>
         /// <param name="mime">MIME</param>
         /// <returns>Returns True if MIME type is json.</returns>
-        public bool IsJsonMime(String mime)
+        public bool IsJsonMime(string mime)
         {
             var jsonRegex = new Regex("(?i)^(application/json|[^;/ \t]+/[^;/ \t]+[+]json)[ \t]*(;.*)?$");
             return mime != null && (jsonRegex.IsMatch(mime) || mime.Equals("application/json-patch+json"));
@@ -367,7 +365,7 @@ namespace AdventureWorksLT.Service.Client
         /// </summary>
         /// <param name="contentTypes">The Content-Type array to select from.</param>
         /// <returns>The Content-Type header to use.</returns>
-        public String SelectHeaderContentType(String[] contentTypes)
+        public string SelectHeaderContentType(string[] contentTypes)
         {
             if (contentTypes.Length == 0)
                 return "application/json";
@@ -388,15 +386,14 @@ namespace AdventureWorksLT.Service.Client
         /// </summary>
         /// <param name="accepts">The accepts array to select from.</param>
         /// <returns>The Accept header to use.</returns>
-        public String SelectHeaderAccept(String[] accepts)
+        public string SelectHeaderAccept(string[] accepts)
         {
             if (accepts.Length == 0)
                 return null;
 
-            if (accepts.Contains("application/json", StringComparer.OrdinalIgnoreCase))
-                return "application/json";
-
-            return String.Join(",", accepts);
+            return accepts.Contains("application/json", StringComparer.OrdinalIgnoreCase) 
+                ? "application/json" 
+                : string.Join(",", accepts);
         }
 
         /// <summary>
@@ -406,7 +403,7 @@ namespace AdventureWorksLT.Service.Client
         /// <returns>Encoded string.</returns>
         public static string Base64Encode(string text)
         {
-            return System.Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(text));
+            return Convert.ToBase64String(Encoding.UTF8.GetBytes(text));
         }
 
         /// <summary>
@@ -427,8 +424,8 @@ namespace AdventureWorksLT.Service.Client
         /// <returns>Byte array</returns>
         public static byte[] ReadAsBytes(Stream inputStream)
         {
-            byte[] buf = new byte[16*1024];
-            using (MemoryStream ms = new MemoryStream())
+            var buf = new byte[16*1024];
+            using (var ms = new MemoryStream())
             {
                 int count;
                 while ((count = inputStream.Read(buf, 0, buf.Length)) > 0)
@@ -451,7 +448,7 @@ namespace AdventureWorksLT.Service.Client
 
             if (input == null)
             {
-                throw new ArgumentNullException("input");
+                throw new ArgumentNullException(nameof(input));
             }
 
             if (input.Length <= maxLength)
@@ -459,13 +456,13 @@ namespace AdventureWorksLT.Service.Client
                 return Uri.EscapeDataString(input);
             }
 
-            StringBuilder sb = new StringBuilder(input.Length * 2);
-            int index = 0;
+            var sb = new StringBuilder(input.Length * 2);
+            var index = 0;
 
             while (index < input.Length)
             {
-                int length = Math.Min(input.Length - index, maxLength);
-                string subString = input.Substring(index, length);
+                var length = Math.Min(input.Length - index, maxLength);
+                var subString = input.Substring(index, length);
 
                 sb.Append(Uri.EscapeDataString(subString));
                 index += subString.Length;
@@ -481,22 +478,18 @@ namespace AdventureWorksLT.Service.Client
         /// <returns>Filename</returns>
         public static string SanitizeFilename(string filename)
         {
-            Match match = Regex.Match(filename, @".*[/\\](.*)$");
+            var match = Regex.Match(filename, @".*[/\\](.*)$");
 
-            if (match.Success)
-            {
-                return match.Groups[1].Value;
-            }
-            else
-            {
-                return filename;
-            }
+            return match.Success 
+                ? match.Groups[1].Value 
+                : filename;
         }
 
         /// <summary>
         /// Convert params to key/value pairs. 
         /// Use collectionFormat to properly format lists and collections.
         /// </summary>
+        /// <param name="collectionFormat"></param>
         /// <param name="name">Key name.</param>
         /// <param name="value">Value object.</param>
         /// <returns>A list of KeyValuePairs</returns>

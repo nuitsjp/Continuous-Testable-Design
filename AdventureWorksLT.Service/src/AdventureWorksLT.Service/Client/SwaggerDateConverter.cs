@@ -9,9 +9,11 @@
  */
 
 using Newtonsoft.Json.Converters;
+// ReSharper disable UnusedMember.Global
 
 namespace AdventureWorksLT.Service.Client
 {
+    /// <inheritdoc />
     /// <summary>
     /// Formatter for 'date' swagger formats ss defined by full-date - RFC3339
     /// see https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types
