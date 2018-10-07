@@ -1,4 +1,6 @@
-﻿namespace HatPepper
+﻿using System;
+
+namespace HatPepper
 {
     /// <summary>
     /// 端末の位置情報を取得する
@@ -8,6 +10,6 @@
         /// <summary>
         /// 現在地を取得する
         /// </summary>
-        Location GetCurrent();
+        Location GetCurrent(TimeSpan timeout);
     }
 }

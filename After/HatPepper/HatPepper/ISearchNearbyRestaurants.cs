@@ -5,6 +5,6 @@ namespace HatPepper
 {
     public interface ISearchNearbyRestaurants
     {
-        Task<IEnumerable<Restaurant>> SearchAsync();
+        Task<SearchResult> SearchAsync();
     }
 }

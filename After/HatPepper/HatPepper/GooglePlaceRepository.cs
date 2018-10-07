@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using GoogleApi;
 using GoogleApi.Entities.Common.Enums;
@@ -17,7 +18,7 @@ namespace HatPepper
             _key = key;
         }
 
-        public async Task<IEnumerable<Restaurant>> SearchNearbyAsync(Location location, double radius)
+        public async Task<SearchResult> SearchNearbyAsync(Location location, double radius)
         {
             var request = new PlacesNearBySearchRequest
             {
@@ -28,8 +29,18 @@ namespace HatPepper
                 Type = SearchPlaceType.Restaurant
             };
             var response = await GooglePlaces.NearBySearch.QueryAsync(request);
-            return response.Results.Select(nearByResult =>
-                new Restaurant {Name = nearByResult.Name, Rating = nearByResult.Rating});
+            if (response.Status == Status.Ok)
+            {
+                return new SearchResult(
+                    SearchResultStatus.OK,
+                    response.Results
+                        .Select(nearByResult => new Restaurant { Name = nearByResult.Name, Rating = nearByResult.Rating })
+                        .ToList());
+            }
+            else
+            {
+                return new SearchResult(SearchResultStatus.ErrorFromRepository);
+            }
         }
     }
 }
