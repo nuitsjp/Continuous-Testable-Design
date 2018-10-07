@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using ProductSalesList.Models;
 
-namespace ProductSalesList.Views
+namespace ProductSalesList.Controllers
 {
     public interface IView
     {

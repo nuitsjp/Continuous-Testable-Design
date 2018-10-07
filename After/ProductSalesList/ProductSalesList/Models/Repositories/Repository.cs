@@ -2,7 +2,7 @@
 using System.Linq;
 using AdventureWorksLT.Service.Api;
 
-namespace ProductSalesList.Models
+namespace ProductSalesList.Models.Repositories
 {
     public class Repository : IRepository
     {
