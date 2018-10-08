@@ -1,7 +1,7 @@
 ﻿using System;
-using AdventureWorksLT.Service.Api;
+using System.Configuration;
+using System.Data.Common;
 using ProductSalesList.Controllers;
-using ProductSalesList.Models;
 using ProductSalesList.Models.BusinessLogics;
 using ProductSalesList.Models.Repositories;
 using ProductSalesList.Views;
@@ -16,14 +16,24 @@ namespace ProductSalesList
         // ReSharper disable once ArrangeTypeMemberModifiers
         static void Main(string[] args)
         {
-            var controller =
-                new Controller(
-                    new BusinessLogic(
-                        new Repository(
-                            new ProductsApi(BasePath),
-                            new SalesOrderDetailsApi(BasePath))),
-                    new View("output.csv"));
-            controller.Execute();
+            // ここでDBコネクションを作成してしまっているが、実際のプロダクションコードでは
+            // お勧めできない。AOPを利用して、BusinessLogic層の上で統一的にトランザクション管理
+            // するのが、個人的には良いと考えている。
+            var settings = ConfigurationManager.ConnectionStrings["AdventureWorks2017"];
+            var factory = DbProviderFactories.GetFactory(settings.ProviderName);
+            using (var connection = factory.CreateConnection())
+            {
+                connection.ConnectionString = settings.ConnectionString;
+                connection.Open();
+
+                var controller =
+                    new Controller(
+                        new BusinessLogic(
+                            new Repository(connection)),
+                        new View("output.csv"));
+                controller.Execute();
+            }
+
 
 
             Console.WriteLine("Completed. Please pless any key.");

@@ -70,11 +70,5 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\AdventureWorksLT.Service\src\AdventureWorksLT.Service\AdventureWorksLT.Service.csproj">
-      <Project>{bd0b6de8-f92d-46a2-8674-86c3b62b9104}</Project>
-      <Name>AdventureWorksLT.Service</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
