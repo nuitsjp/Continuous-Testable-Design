@@ -2,6 +2,7 @@
 using AdventureWorksLT.Service.Api;
 using ProductSalesList.Controllers;
 using ProductSalesList.Models;
+using ProductSalesList.Models.BusinessLogics;
 using ProductSalesList.Models.Repositories;
 using ProductSalesList.Views;
 

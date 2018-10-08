@@ -1,4 +1,4 @@
-﻿namespace ProductSalesList.Models
+﻿namespace ProductSalesList.Models.BusinessLogics
 {
     public class ProductSales
     {

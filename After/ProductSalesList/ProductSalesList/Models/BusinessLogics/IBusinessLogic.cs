@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ProductSalesList.Models
+namespace ProductSalesList.Models.BusinessLogics
 {
     public interface IBusinessLogic
     {

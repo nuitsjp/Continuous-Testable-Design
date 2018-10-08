@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace ProductSalesList.Models
+namespace ProductSalesList.Models.BusinessLogics
 {
     public class BusinessLogic : IBusinessLogic
     {
@@ -20,7 +20,7 @@ namespace ProductSalesList.Models
         {
             // 注文明細を全て取得し、プロダクトIDでグルーピングし、プロダクトID別の総売上を集計する
             var salesByProductId =
-                _repository.GetSales()
+                _repository.GetSalesLineTotal()
                     .GroupBy(salesOrderDetail => salesOrderDetail.ProductId)
                     .Select(x =>
                         new

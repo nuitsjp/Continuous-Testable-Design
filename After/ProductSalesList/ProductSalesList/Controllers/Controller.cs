@@ -1,4 +1,5 @@
 ﻿using ProductSalesList.Models;
+using ProductSalesList.Models.BusinessLogics;
 using ProductSalesList.Views;
 
 namespace ProductSalesList.Controllers

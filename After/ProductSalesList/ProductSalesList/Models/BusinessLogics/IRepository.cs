@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 
-namespace ProductSalesList.Models
+namespace ProductSalesList.Models.BusinessLogics
 {
     public interface IRepository
     {
-        IList<ProductName> GetProductNames();
+        IEnumerable<ProductName> GetProductNames();
 
-        IList<Sales> GetSales();
+        IEnumerable<SalesLineTotal> GetSalesLineTotal();
     }
 }
