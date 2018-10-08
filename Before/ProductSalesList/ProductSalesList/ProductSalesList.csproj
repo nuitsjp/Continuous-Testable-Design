@@ -35,7 +35,15 @@
     <Reference Include="CsvHelper, Version=7.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
       <HintPath>..\packages\CsvHelper.7.1.1\lib\net45\CsvHelper.dll</HintPath>
     </Reference>
+    <Reference Include="Dapper, Version=1.50.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.1.50.2\lib\net451\Dapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Dapper.FastCrud, Version=2.5.0.39, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.FastCrud.2.5.0.39\lib\net46\Dapper.FastCrud.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -46,9 +54,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\Controller.cs" />
-    <Compile Include="Models\BusinessLogic.cs" />
-    <Compile Include="Models\ProductSales.cs" />
-    <Compile Include="Models\Repository.cs" />
+    <Compile Include="Models\BusinessLogics\BusinessLogic.cs" />
+    <Compile Include="Models\BusinessLogics\ProductSales.cs" />
+    <Compile Include="Models\Repositories\Product.cs" />
+    <Compile Include="Models\Repositories\Repository.cs" />
+    <Compile Include="Models\Repositories\SalesOrderDetail.cs" />
+    <Compile Include="Models\SampleModelGeneratorConfig.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SampleModelGeneratorConfig.tt</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\ProductSalesCsvRow.cs" />
@@ -59,10 +74,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\AdventureWorksLT.Service\src\AdventureWorksLT.Service\AdventureWorksLT.Service.csproj">
-      <Project>{bd0b6de8-f92d-46a2-8674-86c3b62b9104}</Project>
-      <Name>AdventureWorksLT.Service</Name>
-    </ProjectReference>
+    <None Include="Models\GenericModelGenerator.tt" />
+    <None Include="Models\SampleModelGeneratorConfig.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>SampleModelGeneratorConfig.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

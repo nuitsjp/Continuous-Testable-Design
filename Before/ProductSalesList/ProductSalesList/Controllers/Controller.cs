@@ -1,23 +1,24 @@
-﻿using ProductSalesList.Models;
+﻿using ProductSalesList.Models.BusinessLogics;
 using ProductSalesList.Views;
 
 namespace ProductSalesList.Controllers
 {
     public class Controller
     {
-        public void Write(string filePath)
+        public void Execute(string fileName)
         {
             var businessLogic = new BusinessLogic();
             var productSalesList = businessLogic.GetProductSalesList();
-            using (var view = new View(filePath))
+
+            using (var view = new View(fileName))
             {
-                foreach (var productSales in productSalesList)
+                foreach (var productSalese in productSalesList)
                 {
-                    view.Write(
+                    view.WriteRecord(
                         new ProductSalesCsvRow
                         {
-                            Name = productSales.Name,
-                            Sales = productSales.Sales
+                            Name = productSalese.Name,
+                            Sales = productSalese.Sales
                         });
                 }
             }

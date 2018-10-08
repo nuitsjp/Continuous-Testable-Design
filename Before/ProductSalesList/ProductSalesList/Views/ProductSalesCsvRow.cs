@@ -10,6 +10,6 @@ namespace ProductSalesList.Views
 
         [Name("総売上")]
         [Index(1)]
-        public double Sales { get; set; }
+        public decimal Sales { get; set; }
     }
 }

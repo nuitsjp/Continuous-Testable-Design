@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using CsvHelper;
+using ProductSalesList.Controllers;
+using ProductSalesList.Models.BusinessLogics;
 
 namespace ProductSalesList.Views
 {
@@ -15,7 +19,7 @@ namespace ProductSalesList.Views
             _csvWriter.WriteHeader<ProductSalesCsvRow>();
             _csvWriter.NextRecord();
         }
-        public void Write(ProductSalesCsvRow productSalesCsvRow)
+        public void WriteRecord(ProductSalesCsvRow productSalesCsvRow)
         {
             _csvWriter.WriteRecord(productSalesCsvRow);
             _csvWriter.NextRecord();
@@ -23,7 +27,6 @@ namespace ProductSalesList.Views
 
         public void Dispose()
         {
-            _csvWriter.Dispose();
         }
     }
 }
