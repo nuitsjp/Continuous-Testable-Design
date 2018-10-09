@@ -1,20 +1,23 @@
-﻿using ProductSalesList.Models.BusinessLogics;
+﻿using System;
+using ProductSalesList.Models.BusinessLogics;
 using ProductSalesList.Views;
 
 namespace ProductSalesList.Controllers
 {
     public class Controller
     {
-        public void Execute(string fileName)
-        {
-            var businessLogic = new BusinessLogic();
-            var productSalesList = businessLogic.GetProductSalesList();
+        private readonly BusinessLogic _businessLogic = new BusinessLogic();
+        private readonly View _view = new View();
 
-            using (var view = new View(fileName))
+        public void Execute(string fineName)
+        {
+            var productSalesList = _businessLogic.GetProductSalesList();
+
+            using (_view.Open(fineName))
             {
                 foreach (var productSalese in productSalesList)
                 {
-                    view.WriteRecord(
+                    _view.WriteRecord(
                         new ProductSalesCsvRow
                         {
                             Name = productSalese.Name,
