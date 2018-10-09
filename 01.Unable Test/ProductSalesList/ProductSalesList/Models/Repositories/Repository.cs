@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.Common;
@@ -48,9 +49,17 @@ namespace ProductSalesList.Models.Repositories
             var settings = ConfigurationManager.ConnectionStrings["AdventureWorks2017"];
             var factory = DbProviderFactories.GetFactory(settings.ProviderName);
             var connection = factory.CreateConnection();
-            connection.ConnectionString = settings.ConnectionString;
-            connection.Open();
-            return connection;
+            try
+            {
+                connection.ConnectionString = settings.ConnectionString;
+                connection.Open();
+                return connection;
+            }
+            catch (Exception)
+            {
+                connection.Close();
+                throw;
+            }
         }
     }
 }
