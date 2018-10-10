@@ -17,3 +17,12 @@
 3. 継続的にテスト可能なコード
 
 にリファクタリングしていきます。
+
+上記の三段階のコードは、フォルダ分けしてここに置いてあります。まだ直すかもしれません。
+
+## 環境
+
+* Windows 10
+* Visual Studio 2017
+* SQL Server 2017 Developer Edition
+* SQL Server SampleDB AndentureWorks 2017
