@@ -4,9 +4,9 @@
 
 ## スライド
 
-まだα版なので直しますがRoom選択の参考にどうぞ
+まだβ版で一部分ですがRoom選択の参考にどうぞ
 
-[α版　継続的にテスト可能な設計を考える](https://www.slideshare.net/AtsushiNakamura4/ss-119005976)
+[継続的にテスト可能な設計を考える ベータ版](https://www.slideshare.net/AtsushiNakamura4/ss-119158059)
 
 ## コード
 
