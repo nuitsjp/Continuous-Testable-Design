@@ -21,13 +21,13 @@ namespace ProductSalesList.Controllers
 
             using (_view.Open(fineName))
             {
-                foreach (var productSalese in productSalesList)
+                foreach (var productSales in productSalesList)
                 {
                     _view.WriteRecord(
                         new ProductSalesCsvRow
                         {
-                            Name = productSalese.Name,
-                            Sales = productSalese.Sales
+                            Name = productSales.Name,
+                            Sales = productSales.Sales
                         });
                 }
             }
