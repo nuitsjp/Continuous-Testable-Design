@@ -17,13 +17,13 @@ namespace ProductSalesList.Models.Repositories
         //        .RegisterEntity<ProductName>()
         //        .SetSchemaName("Production")
         //        .SetTableName("Product")
-        //        .SetProperty(x => x.ProductId)
+        //        .SetProperty(x => x.ProductID)
         //        .SetProperty(x => x.Name);
         //    OrmConfiguration
         //        .RegisterEntity<SalesLineTotal>()
         //        .SetSchemaName("Sales")
         //        .SetTableName("SalesOrderDetail")
-        //        .SetProperty(x => x.ProductId)
+        //        .SetProperty(x => x.ProductID)
         //        .SetProperty(x => x.LineTotal);
         //}
         #endregion
