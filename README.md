@@ -6,7 +6,7 @@
 
 まだβ版で一部分ですがRoom選択の参考にどうぞ
 
-[継続的にテスト可能な設計を考える ベータ版](https://www.slideshare.net/AtsushiNakamura4/ss-119275254)
+[継続的にテスト可能な設計を考える](https://www.slideshare.net/AtsushiNakamura4/ss-119275254)
 
 ## コード
 
