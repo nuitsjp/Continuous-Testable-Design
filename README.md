@@ -1,12 +1,12 @@
 # Continuous-Testable-Design
 
-[.NET Conf 2018 Tokyo, Japan](https://csugjp.connpass.com/event/100049/)にて発表予定の「継続的にテスト可能な設計を考える」の資料です。
+[.NET Conf 2018 Tokyo, Japan](https://csugjp.connpass.com/event/100049/)にて発表の「継続的にテスト可能な設計を考える」の資料です。
 
 ## スライド
 
 まだβ版で一部分ですがRoom選択の参考にどうぞ
 
-[継続的にテスト可能な設計を考える ベータ版](https://www.slideshare.net/AtsushiNakamura4/ss-119158059)
+[継続的にテスト可能な設計を考える ベータ版](https://www.slideshare.net/AtsushiNakamura4/ss-119275254)
 
 ## コード
 
