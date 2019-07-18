@@ -11,7 +11,6 @@ namespace ProductSalesList
     // ReSharper disable once ArrangeTypeModifiers
     class Program
     {
-        private const string BasePath = "http://adventureworkslt.azurewebsites.net";
         // ReSharper disable once UnusedParameter.Local
         // ReSharper disable once ArrangeTypeMemberModifiers
         static void Main(string[] args)
